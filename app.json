@@ -1,0 +1,7 @@
+{
+  "name": "Cenit-IO Remote Algorithms",
+  "description": "REST service to run Cenit-IO remote algorithms written in Ruby.",
+  "repository": "https://github.com/cenit-io/cenit-rarg-ruby",
+  "keywords": ["ruby", "rails", "cenit-io" ],
+  "image": "heroku/ruby"
+}
