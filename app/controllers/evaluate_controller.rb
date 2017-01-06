@@ -11,18 +11,26 @@ class EvaluateController < ApplicationController
     parameters = params[:parameters] || {}
     parameters = parameters.empty? ? {} : JSON.parse(params[:parameters]) if parameters.is_a?(String)
 
-    b = binding
+    evaluate_scope = EvaluateScope.new(self)
+    b = evaluate_scope::get_binding
     parameters.each { |k, v| b.local_variable_set(k, v) }
 
-    eval params[:code], b
+    b.eval params[:code]
   rescue Exception => ex
     render :text => ex, status: 500
   end
+end
 
-  private
-
-  def done(result)
-    render :json => result
+class EvaluateScope
+  def initialize(ctrl)
+    @ctrl = ctrl
   end
 
+  def get_binding
+    return binding
+  end
+
+  def done(result)
+    @ctrl.render :json => result
+  end
 end
